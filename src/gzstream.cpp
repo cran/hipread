@@ -48,7 +48,6 @@ bool GzStream::getLine(const char* &line_start, const char* &line_end) {
     line_start = cur;
     line_end = end;
     cur = end;
-    if (gzclose(file) != Z_OK) stop("Could not close file");
     return true;
   }
 
@@ -120,4 +119,11 @@ void GzStream::skipBOM() {
     }
     break;
   }
+}
+
+void GzStream::reset() {
+  cur = nullptr;
+  done = false;
+  gzrewind(file);
+  fillBuffer();
 }

@@ -31,14 +31,7 @@ public:
     return n_;
   }
 
-  void resize(int n) {
-    if (n == n_)
-      return;
-
-    n_ = n;
-    values_ = Rf_lengthgets(values_, n);
-  }
-
+  virtual void resize(int n) = 0; // resize is virtual so int/dbl can update pointers
   static ColumnPtr create(std::string type, Rcpp::List var_opts, Iconv* pEncoder_);
 
   Rcpp::RObject vector() {
@@ -66,6 +59,7 @@ public:
     pEncoder_ = pEncoder;
   }
   ~ColumnCharacter() {}
+  void resize(int n);
   void setValue(int i, const char* x_start, const char* x_end);
   std::string getType() {return "character";}
 };
@@ -73,26 +67,34 @@ public:
 class ColumnDouble : public Column {
 private:
   int imp_dec;
+  double imp_dec_base;
+  double *valuepointer;
 public:
   ColumnDouble(Rcpp::List opts_) : Column(Rcpp::DoubleVector()) {
+    // Solaris doesn't have (int, int) method for pow
     imp_dec = opts_["imp_dec"];
+    imp_dec_base = static_cast<double>(std::pow(10.0, static_cast<float>(opts_["imp_dec"])));
   }
   ~ColumnDouble() {}
+  void resize(int n);
   void setValue(int i, const char* x_start, const char* x_end);
   std::string getType() {return "double";}
 };
 
 
 class ColumnInteger : public Column {
+private:
+  int *valuepointer;
 public:
   ColumnInteger(Rcpp::List opts_) : Column(Rcpp::IntegerVector()) {}
   ~ColumnInteger() {}
+  void resize(int n);
   void setValue(int i, const char* x_start, const char* x_end);
   std::string getType() {return "integer";}
 };
 
 std::vector<ColumnPtr> createAllColumns(Rcpp::CharacterVector types, Rcpp::List var_opts, Iconv* pEncoder_);
 void resizeAllColumns(std::vector<ColumnPtr>& columns, int n);
-Rcpp::RObject columnsToDf(std::vector<ColumnPtr> columns, Rcpp::CharacterVector names);
+Rcpp::RObject columnsToDf(std::vector<ColumnPtr> columns, Rcpp::CharacterVector names, int n);
 
 #endif

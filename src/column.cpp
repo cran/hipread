@@ -76,15 +76,14 @@ void ColumnDouble::setValue(int i, const char* x_start, const char* x_end) {
   if (!success) {
     add_failure(i, x_start, x_end);
     value = NA_REAL;
-  } else {
-    // Solaris doesn't have (int, int) method for pow
-    value = static_cast<double>(value / std::pow(10.0, static_cast<float>(imp_dec)));
+  } else if (imp_dec != 0) {
+    value = value / imp_dec_base;
   }
-  REAL(values_)[i] = static_cast<double>(value);
+  valuepointer[i] = value;
 }
 
 void ColumnInteger::setValue(int i, const char* x_start, const char* x_end) {
-  long int value;
+  int value;
   IpStringUtils::newtrim(x_start, x_end);
   bool success;
   if (x_start == x_end) {
@@ -98,10 +97,50 @@ void ColumnInteger::setValue(int i, const char* x_start, const char* x_end) {
     add_failure(i, x_start, x_end);
     value = NA_INTEGER;
   }
-  INTEGER(values_)[i] = static_cast<int>(value);
+  valuepointer[i] = value;
 }
 
+void ColumnCharacter::resize(int n) {
+  if (n == n_)
+    return;
 
+  if (n > 0 && n < n_) {
+    SETLENGTH(values_, n);
+    SET_TRUELENGTH(values_, n);
+  } else {
+    values_ = Rf_lengthgets(values_, n);
+  }
+  n_ = n;
+
+}
+
+void ColumnDouble::resize(int n) {
+  if (n == n_)
+    return;
+
+  if (n > 0 && n < n_) {
+    SETLENGTH(values_, n);
+    SET_TRUELENGTH(values_, n);
+  } else {
+    values_ = Rf_lengthgets(values_, n);
+  }
+  n_ = n;
+  valuepointer = REAL(values_);
+}
+
+void ColumnInteger::resize(int n) {
+  if (n == n_)
+    return;
+
+  if (n > 0 && n < n_) {
+    SETLENGTH(values_, n);
+    SET_TRUELENGTH(values_, n);
+  } else {
+    values_ = Rf_lengthgets(values_, n);
+  }
+  n_ = n;
+  valuepointer = INTEGER(values_);
+}
 
 std::vector<ColumnPtr> createAllColumns(CharacterVector types, Rcpp::List var_opts, Iconv* pEncoder_) {
   int num_cols = static_cast<int>(types.size());
@@ -124,8 +163,9 @@ void resizeAllColumns(std::vector<ColumnPtr>& columns, int n) {
 
 static Function as_tibble("as_tibble", Environment::namespace_env("tibble"));
 
-RObject columnsToDf(std::vector<ColumnPtr> columns, Rcpp::CharacterVector names) {
+RObject columnsToDf(std::vector<ColumnPtr> columns, Rcpp::CharacterVector names, int n) {
   size_t num_vars = columns.size();
+
   List out(num_vars);
   for (size_t i = 0; i < num_vars; ++i) {
     if (columns[i]->has_failures()) {
@@ -136,5 +176,8 @@ RObject columnsToDf(std::vector<ColumnPtr> columns, Rcpp::CharacterVector names)
     out[static_cast<long>(i)] = columns[i]->vector();
   }
   out.attr("names") = names;
-  return as_tibble(out);
+  out.attr("class") = CharacterVector::create("tbl_df", "tbl", "data.frame");
+  out.attr("row.names") = IntegerVector::create(NA_INTEGER, -(n));
+
+  return out;
 }

@@ -47,6 +47,13 @@ void read_chunked_long(
 
   RtInfo rts(rt_info, var_pos_info.names());
   VarInfo vars(var_pos_info, rts.getNumRts());
+
+  std::vector<size_t> vnum_per_rt = vars.get_num_vars_rectype();
+  std::vector<std::vector<size_t> > vpos_per_rt = vars.get_var_pos_rectype();
+  std::vector<std::vector<int> > start_per_rt = vars.get_var_starts_rectype();
+  std::vector<std::vector<int> > width_per_rt = vars.get_var_widths_rectype();
+  std::vector<int> max_ends_per_rt = vars.get_max_ends_rectype();
+
   int chunk_start = 1;
   while (isTrue(R6method(callback, "continue")()) && !data->isDone()) {
     std::vector<ColumnPtr> chunk = createAllColumns(var_types, var_opts, &pEncoder_);
@@ -74,23 +81,23 @@ void read_chunked_long(
       }
 
       // Check if raw line is long enough
-      if (line_end - line_start < vars.get_max_end(rt_index)) {
+      if (line_end - line_start < max_ends_per_rt[rt_index]) {
         Rcpp::stop("Line is too short for rectype.");
       }
 
       // Loop through vars in rectype and add to out
-      for (size_t j = 0; j < vars.get_num_vars(rt_index); j++) {
-        const char *x_start = line_start + vars.get_start(rt_index, j);
-        const char *x_end = x_start + vars.get_width(rt_index, j);
+      for (size_t j = 0; j < vnum_per_rt[rt_index]; j++) {
+        const char *x_start = line_start + start_per_rt[rt_index][j];
+        const char *x_end = x_start + width_per_rt[rt_index][j];
 
-        size_t cur_var_pos = vars.get_var_pos(rt_index, j);
+        size_t cur_var_pos = vpos_per_rt[rt_index][j];
 
         chunk[cur_var_pos]->setValue(i, x_start, x_end);
       }
     }
 
     resizeAllColumns(chunk, i);
-    RObject chunk_df = columnsToDf(chunk, var_names);
+    RObject chunk_df = columnsToDf(chunk, var_names, i);
     R6method(callback, "receive")(chunk_df, chunk_start);
     chunk_start += i;
 
@@ -98,6 +105,9 @@ void read_chunked_long(
     if (progress) {
       ProgressBar.show(data->progress_info());
     }
+  }
+  if (progress) {
+    ProgressBar.show(data->progress_info());
   }
   ProgressBar.stop();
 }
@@ -131,6 +141,11 @@ void read_chunked_list(
 
   RtInfo rts(rt_info, var_pos_info.names());
   VarInfo vars(var_pos_info, rts.getNumRts());
+
+  std::vector<size_t> vnum_per_rt = vars.get_num_vars_rectype();
+  std::vector<std::vector<int> > start_per_rt = vars.get_var_starts_rectype();
+  std::vector<std::vector<int> > width_per_rt = vars.get_var_widths_rectype();
+  std::vector<int> max_ends_per_rt = vars.get_max_ends_rectype();
 
   int chunk_start = 1;
   while (isTrue(R6method(callback, "continue")()) && !data->isDone()) {
@@ -166,14 +181,14 @@ void read_chunked_list(
       }
       cur_pos_rt[rt_index]++;
       // Check if raw line is long enough
-      if (line_end - line_start < vars.get_max_end(rt_index)) {
+      if (line_end - line_start < max_ends_per_rt[rt_index]) {
         Rcpp::stop("Line is too short for rectype.");
       }
 
       // Loop through vars in rectype and add to out
-      for (size_t j = 0; j < vars.get_num_vars(rt_index); j++) {
-        const char *x_start = line_start + vars.get_start(rt_index, j);
-        const char *x_end = x_start + vars.get_width(rt_index, j);
+      for (size_t j = 0; j < vnum_per_rt[rt_index]; j++) {
+        const char *x_start = line_start + start_per_rt[rt_index][j];
+        const char *x_end = x_start + width_per_rt[rt_index][j];
 
         chunk[rt_index][j]->setValue(cur_pos_rt[rt_index], x_start, x_end);
       }
@@ -182,7 +197,7 @@ void read_chunked_list(
     List list_chunk;
     for (size_t j = 0; j < rts.getNumRts(); ++j) {
       resizeAllColumns(chunk[j], cur_pos_rt[j] + 1);
-      list_chunk.push_back(columnsToDf(chunk[j], var_names[static_cast<R_xlen_t>(j)]));
+      list_chunk.push_back(columnsToDf(chunk[j], var_names[static_cast<R_xlen_t>(j)], cur_pos_rt[j] + 1));
     }
     list_chunk.names() = var_pos_info.names();
     R6method(callback, "receive")(list_chunk, chunk_start);
@@ -192,6 +207,9 @@ void read_chunked_list(
     if (progress) {
       ProgressBar.show(data->progress_info());
     }
+  }
+  if (progress) {
+    ProgressBar.show(data->progress_info());
   }
   ProgressBar.stop();
 }
