@@ -1,7 +1,7 @@
-7716246c13d47f47397c5f05ac63b96c *DESCRIPTION
-b234ee4d69f5fce4486a80fdaf4a4263 *LICENSE
+a3b30a894006d112e88d4f13c9a323f2 *DESCRIPTION
+ffa10f40b98be2c2bc9608f56827ed23 *LICENSE
 61fa2e7cec0449d4fb19a49b25096d66 *NAMESPACE
-83d8a002fc9814828c781807587abae9 *NEWS.md
+32a7fd410717d605a8688358e219f607 *NEWS.md
 08635cf1998468be1f8b1197b1d1ed18 *R/RcppExports.R
 8730a130ba8e9e37a263c8c7a35b13a1 *R/arg_checkers.R
 b4d7f1d11e27780aa486d0c37b3ac984 *R/callbacks.R
@@ -11,10 +11,10 @@ fd66274043498a0998ee1e0546090033 *R/col_specs.R
 02bcc447494e6a6983cf81eb6cafaedc *R/readh_chunked.R
 27dc574d852785af779a3ddb5d1c2b10 *R/readh_freqs.R
 e79366f0975108e3caba544408d23bbe *R/readh_yield.R
-0c131b383c1b83daf44702812248dde9 *R/utilities.R
+c0eaf44af769a499e74a2b3638075ce3 *R/utilities.R
 2b5eb119e34025be29d1b9284498aabb *R/yields.R
 e1a2cf4e1061b0a4246b0c2139b8e4a2 *README.md
-b92bff7301de637adb271afdfcf67e52 *inst/extdata/test-basic.dat
+b9b482b0c878b21bd9631c3e2483fedf *inst/extdata/test-basic.dat
 e65ce020bb32ffe4a306aa258757019a *inst/extdata/test-basic.dat.gz
 320e2b4a3bfab9ead1736219dd764dc8 *inst/extdata/test-enc-latin1.dat
 e978d24856029e761feda19936822034 *inst/extdata/test-enc-utf8.dat
@@ -24,7 +24,7 @@ d8c76be6de2286c16d5e062785610488 *inst/extdata/test-whitespace.dat.gz
 6c9e445d18ad98b78dbbe89d1761ff07 *man/callback.Rd
 30e892b4f42961e2a96dd607e703a903 *man/hip_fwf_positions.Rd
 18b861f81087b0db9dc2d0f711378686 *man/hip_rt.Rd
-8d12be2efc8959bc5543bc6ba3509b7f *man/hipread-package.Rd
+63686cf6809c9be922fe6d74e670587c *man/hipread-package.Rd
 b9f67109c15e0e9a6dec06580007fe93 *man/hipread_example.Rd
 580d64eab3b60d86557172130f8d7a19 *man/hipread_freqs.Rd
 87bf29dc6a74c1bc78a5a11b23602a65 *man/hipread_long.Rd
@@ -53,7 +53,7 @@ cb334d8e4911e5f78aa981e827de5b87 *src/read_yield.cpp
 dc74d8f7165e49b39402463c23386e73 *src/string_utils.h
 3514b53d01e91cb1e76d5d8699b4d897 *src/varinfo.cpp
 1d81f277df4ca460c5d23a74c2c17394 *src/varinfo.h
-aab0fb631f010eba5d92805de704bfd4 *tests/testthat.R
+d0691596b793eb9d967f664a2edf97ce *tests/testthat.R
 1f153c365b12baf8350a960c8c071837 *tests/testthat/test-callback-compat.R
 69fd6e8c6947317ec8acbb761e2ff150 *tests/testthat/test-encoding.R
 7d2e4a8272932be3d6c21c998d02c71f *tests/testthat/test-freqs.R
