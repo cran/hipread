@@ -1,9 +1,9 @@
 # hipread
 
 [![Project
-Status:Active](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+Status:Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![CRAN status](https://www.r-pkg.org/badges/version/hipread)](https://cran.r-project.org/package=hipread)
-[![Travis build status](https://travis-ci.org/mnpopcenter/hipread.svg?branch=master)](https://travis-ci.org/mnpopcenter/hipread)
+[![R-CMD-check](https://github.com/ipums/hipread/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ipums/hipread/actions/workflows/R-CMD-check.yaml)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/iaxoy4hjb1m85p2b/branch/master?svg=true)](https://ci.appveyor.com/project/mpcit/hipread)
 
 hipread (hierarchical IPUMS reader) is a fork from 
@@ -36,5 +36,5 @@ Install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("mnpopcenter/hipread")
+devtools::install_github("ipumsr/hipread")
 ```
