@@ -1,7 +1,7 @@
-a60bbddc41e7557e5bde7b2e00a59fd3 *DESCRIPTION
+d1131998c66052d8131383dee3b7cd77 *DESCRIPTION
 b234ee4d69f5fce4486a80fdaf4a4263 *LICENSE
 6198741171bd2120dafe6e11f4a42003 *NAMESPACE
-c99db5f1f3d7dbfed6caae3e2645ef79 *NEWS.md
+feb239a78ad2d01742af596cfd3a6be8 *NEWS.md
 08635cf1998468be1f8b1197b1d1ed18 *R/RcppExports.R
 b38da03f9dca9011faa9186798c64b68 *R/arg_checkers.R
 9cb4d9ed9842b585c9cd2e97cc9fc7f3 *R/callbacks.R
@@ -35,7 +35,7 @@ ff0449f1bd6a122a1cb016e892530e5a *man/callback.Rd
 c85b19c35d1624d2394eca99ae37acd3 *src/Progress.h
 bbf1bdfd8d8c1cbc33bddb69c8097993 *src/RcppExports.cpp
 5b6b4abfa1e865401a5daca3d5888a7e *src/boost.h
-f5e09ede0205435dc35faf3caf3c020c *src/column.cpp
+f86f543fab263a345a4e9499269f3d7c *src/column.cpp
 1f80fbaf1d71cfbe057e3e617295fd81 *src/column.h
 75a942403c8bc8ec28feb789ec2f3b05 *src/datasource.cpp
 bbaa5a946ddefec66cf4acf561445ba3 *src/datasource.h
@@ -55,6 +55,7 @@ dc74d8f7165e49b39402463c23386e73 *src/string_utils.h
 1d81f277df4ca460c5d23a74c2c17394 *src/varinfo.h
 aab0fb631f010eba5d92805de704bfd4 *tests/testthat.R
 d9db7f983b3438d3d2ced0f1e778d15b *tests/testthat/test-callback-compat.R
+7a845d048b72535a85bd475373f97d8c *tests/testthat/test-coltype-warning.R
 7cd44addf8e91a858811c511ffa28af1 *tests/testthat/test-encoding.R
 34b3f0af407dcc981755191436aa0e70 *tests/testthat/test-freqs.R
 60bc9d69acd9ae76ecf55e1a50c8840a *tests/testthat/test-fwf.R

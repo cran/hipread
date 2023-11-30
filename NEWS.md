@@ -1,3 +1,6 @@
+# hipread 0.2.4
+* Fixes for one warning and one note from CRAN checks
+
 # hipread 0.2.3
 * hipread now uses roxygen2 version 7.2.1.
 

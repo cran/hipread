@@ -1,7 +1,7 @@
 Package: hipread
 Type: Package
 Title: Read Hierarchical Fixed Width Files
-Version: 0.2.3
+Version: 0.2.4
 Authors@R: c(
     person("Greg", "Freedman Ellis", role = "aut"),
     person("Derek Burk", email = "ipums+cran@umn.edu", role = c("aut", "cre")),
@@ -24,10 +24,9 @@ Encoding: UTF-8
 LinkingTo: Rcpp, BH
 Imports: Rcpp, R6, rlang, tibble
 Suggests: dplyr, readr, testthat
-SystemRequirements: C++11
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2022-09-30 12:31:29 UTC; Derek
+Packaged: 2023-11-30 15:17:31 UTC; Derek
 Author: Greg Freedman Ellis [aut],
   Derek Burk [aut, cre],
   Joe Grover [ctb],
@@ -42,4 +41,4 @@ Author: Greg Freedman Ellis [aut],
   University of Minnesota [cph]
 Maintainer: Derek Burk <ipums+cran@umn.edu>
 Repository: CRAN
-Date/Publication: 2022-09-30 13:00:02 UTC
+Date/Publication: 2023-11-30 15:50:02 UTC
